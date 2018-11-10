@@ -13,7 +13,10 @@ export const router = new Router({
   routes: [
     {
       path: '*',
-      redirect: '/main'
+      redirect: '/main',
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/login',
@@ -23,7 +26,10 @@ export const router = new Router({
     {
       path: '/',
       name: 'Main',
-      component: Main
+      component: Main,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/main',
