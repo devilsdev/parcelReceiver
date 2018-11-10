@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>Deliver Parcel</h1>
+    <h1 class="title">Deliver Parcel</h1>
     <p>This feature is currently not implemented</p>
   </div>
 </template>

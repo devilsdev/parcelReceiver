@@ -1,23 +1,24 @@
 <template>
   <div class="hello">
-    <h1>Parcel List</h1>
+    <h1 class="title">Parcel List</h1>
     <!--filter for the parcels-->
-    <div class="field">
-      <div class="control">
-        <input class="input" type="text" placeholder="Search for parcel..." v-model="searchInput">
+    <div class="field has-addons">
+      <div class="control searchinput">
+        <input class="input" type="text" placeholder="Search for a parcel..." v-model="searchInput">
+      </div>
+
+      <div class="control searchoption">
+        <div class="select">
+          <select v-model="filterOption">
+            <option value="parcelno">Parcel Number</option>
+            <option value="sender">Sender</option>
+            <option value="receiver">Receiver</option>
+            <option value="comment">Comment</option>
+            <option value="status">Status</option>
+          </select>
+        </div>
       </div>
     </div>
-    <p>Filter by: </p>
-    <div class="select">
-      <select v-model="filterOption">
-        <option value="parcelno">Parcel Number</option>
-        <option value="sender">Sender</option>
-        <option value="receiver">Receiver</option>
-        <option value="comment">Comment</option>
-        <option value="status">Status</option>
-      </select>
-    </div>
-
     <hr>
     <table class="table is-fullwidth">
       <thead>
@@ -84,4 +85,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.searchinput {
+  width: 40%;
+  min-width: 200px;
+}
 </style>

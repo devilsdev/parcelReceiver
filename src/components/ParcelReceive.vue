@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>Receive Parcel</h1>
+    <h1 class="title">Receive Parcel</h1>
 
     <div class="field">
       <div class="control">
