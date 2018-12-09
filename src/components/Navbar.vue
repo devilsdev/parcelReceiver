@@ -14,7 +14,7 @@
                   Receive Parcel
                 </a>
               </div>
-            </div> 
+            </div>
             <div class="navbar-item">
               <div class="buttons">
                 <a class="button is-info" @click="goToDeliverParcel">
@@ -58,9 +58,6 @@ export default {
     goHome () {
       this.$router.replace('/')
     }
-  },
-  mounted () {
-    console.log(this.$store.getters.authenticated)
   }
 }
 </script>

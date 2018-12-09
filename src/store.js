@@ -8,7 +8,7 @@ export const store = new Vuex.Store({
     authenticated: false
   },
   mutations: {
-    changeAuthenticated(state, userLoggedIn) {
+    changeAuthenticated (state, userLoggedIn) {
       state.authenticated = userLoggedIn
     }
   },

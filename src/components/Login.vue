@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import { store } from '../main.js'
 import firebase from 'firebase'
 export default {
   name: 'Login',

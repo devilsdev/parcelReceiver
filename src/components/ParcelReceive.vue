@@ -24,7 +24,7 @@
 
     <div class="select">
       <select v-model="comment">
-        <option disabled value="">Please select a comment</option>
+        <option disabled value="">Select a comment</option>
         <option>Parcel ok</option>
         <option>Parcel damaged</option>
         <option>No sender</option>
@@ -32,12 +32,7 @@
       </select>
     </div>
 
-    <div 
-      class="notification is-success" 
-      style="position: fixed; bottom: 0; margin-bottom: 20px;width: 100%;" 
-      v-if="showSuccess"
-    >Parcel successfully added
-    </div>
+    <notification v-if="showSuccess" infotext="Parcel successfully added" />
 
   </div>
 </template>
@@ -45,8 +40,12 @@
 <script>
 import firebase from 'firebase'
 import { firestore} from "../main.js"
+import Notification from './Notification.vue'
 export default {
-  name: 'HelloWorld',
+  name: 'ParcelReceive',
+  components: {
+    'notification': Notification
+  },
   data () {
     return {
       parcelcode: '',
@@ -58,7 +57,7 @@ export default {
   },
   methods: {
     addParcel () {
-      if (this.parcelcode == '' || this.sender == '' || this.receiver == '') {
+      if (this.parcelcode === '' || this.sender === '' || this.receiver === '') {
         alert('Please fill in all fields')
         return
       }
@@ -71,6 +70,7 @@ export default {
         created: new Date()
       })
       .then(docRef => {
+        console.log(`parcel with id ${docRef.id} successfully added`)
         this.showSuccessMessage()
         this.parcelcode = ''
         this.sender = ''
