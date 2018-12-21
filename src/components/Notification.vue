@@ -1,9 +1,7 @@
 <template>
-    <div 
-      class="notification is-success parcel-notification"
-    > 
-        {{ infotext }}
-    </div>
+	<div 
+		class="notification is-success parcel-notification"
+	> {{ infotext }}</div>
 </template>
 
 <script>

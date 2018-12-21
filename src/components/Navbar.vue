@@ -2,7 +2,8 @@
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a class="navbar-item" @click="goHome">
-          ParcelReceiver
+          <font-awesome-icon icon="box" />
+          <span class="title-padding">ParcelReceiver</span>
         </a>
       </div>
       <div id="navbarBasicExample" class="navbar-menu">
@@ -28,7 +29,8 @@
           <div class="navbar-item" v-if="$store.getters.authenticated">
               <div class="buttons">
                   <a class="button is-light" @click="logoutUser">
-                    Logout 
+                    <span style="padding-right: 1vw">Logout</span>
+                    <font-awesome-icon icon="sign-out-alt" />
                   </a>
               </div>
           </div>
@@ -64,4 +66,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.title-padding{padding-left: 1vw;}
 </style>

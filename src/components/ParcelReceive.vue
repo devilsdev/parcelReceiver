@@ -4,7 +4,7 @@
 
     <div class="field">
       <div class="control">
-        <input class="input" type="text" placeholder="Parcel Code" v-model="parcelcode">
+        <input class="input" type="text" placeholder="Parcel Code" ref="test" v-model="parcelcode">
       </div>
     </div>
 
@@ -16,7 +16,7 @@
 
     <div class="field">
       <div class="control">
-        <input class="input" type="text" placeholder="Receiver" v-model="receiver">
+        <input class="input" type="text" placeholder="Receiver" v-model="receiver" v-on:keypress.enter="addParcel">
       </div>
     </div>
 
@@ -71,6 +71,7 @@ export default {
       })
       .then(docRef => {
         console.log(`parcel with id ${docRef.id} successfully added`)
+        console.log(this.$refs.test.focus())
         this.showSuccessMessage()
         this.parcelcode = ''
         this.sender = ''
@@ -83,8 +84,10 @@ export default {
       setTimeout(() => {
         this.showSuccess = false
       }, 2000)
-    }
-
+    },
+  mounted () {
+    this.$refs.test.focus()
+  }
   }
 }
 </script>

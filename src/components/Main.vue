@@ -20,6 +20,7 @@
       </div>
     </div>
     <hr>
+    <span style="float: left; font-style: oblique;">Parcel´s overall: {{ filteredParcels.length }}</span>
     <table class="table is-fullwidth">
       <thead>
         <tr>
@@ -29,6 +30,7 @@
           <th>Comment</th>
           <th>Status</th>
           <th>Received</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -37,8 +39,17 @@
           <td> {{parcel.sender}} </td>
           <td> {{parcel.receiver}} </td>
           <td> {{parcel.comment}} </td>
-          <td> {{parcel.status}} </td>
-          <td> {{parcel.created.toDate().toISOString()}} </td>
+          <td> 
+            <template v-if="parcel.status === 'received'">
+              <font-awesome-icon icon="arrow-down" color="green"/>
+            </template>
+            <template v-if="parcel.status === 'delivered'">
+              <font-awesome-icon icon="arrow-up" color="purple"/>
+            </template>
+            {{parcel.status}} 
+          </td>
+          <td> {{parcel.created.toDate().toLocaleString()}} </td>
+          <td><font-awesome-icon icon="trash-alt" class="trash-icon" @click="deleteParcelFromFirestore(parcel.id)"/></td>
         </tr>
       </tbody>
     </table>
@@ -48,6 +59,7 @@
 
 <script>
 import { firestore } from '../main.js'
+import { database } from 'firebase';
 export default {
   name: 'Main',
   data () {
@@ -71,13 +83,24 @@ export default {
       parcelsRef.orderBy('created', 'desc').get()
         .then(querySnapshot => {
           querySnapshot.forEach(doc => {
-            parcels.push(doc.data())
+            let parcel = doc.data()
+            parcel.id = doc.id
+            parcels.push(parcel)
           })
         })
         .catch(error => {
           console.log('Error getting documents: ', error)
         })
       return parcels
+    },
+    deleteParcelFromFirestore (parcelId) {
+      if(confirm("Do you really want to delete this parcel?")) {
+        firestore.collection('parcels').doc(parcelId).delete()
+          .then(() => console.log('parcel deleted successfully!'))
+          .catch(err => console.log(err))
+        
+        this.parcels = this.getParcelsFromFirestore()
+      }
     }
   }
 }
@@ -89,4 +112,5 @@ export default {
   width: 40%;
   min-width: 200px;
 }
+.trash-icon:hover{color: red};
 </style>
