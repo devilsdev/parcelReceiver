@@ -16,13 +16,6 @@
                 </a>
               </div>
             </div>
-            <div class="navbar-item">
-              <div class="buttons">
-                <a class="button is-info" @click="goToDeliverParcel">
-                  Deliver Parcel
-                </a>
-              </div>
-            </div> 
           </template>
         </div>
         <div class="navbar-end">

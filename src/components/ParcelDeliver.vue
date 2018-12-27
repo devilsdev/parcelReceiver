@@ -1,19 +1,31 @@
 <template>
-  <div class="hello">
-    <h1 class="title">Deliver Parcel</h1>
+  <div class="deliverView">
+    
+    <h1 class="title">Deliver parcel</h1>
 
-    <div class="control searchinput">
-      <input class="input" type="text" placeholder="Search for a parcel..." v-model="searchInput">
-    </div>
-
-    <div v-for="parcel in filteredParcels" :key="parcel.parcelno">
-      <div class="notification">
-        <p><strong>Parcel Number: </strong>{{ parcel.parcelno }}</p>
-        <p><strong>Sender: </strong>{{ parcel.sender }}</p>
-        <p><strong>Receiver: </strong>{{ parcel.receiver }}</p>
-        <p><strong>Comment: </strong>{{ parcel.comment }}</p>
-        <a class="button is-warning" @click="deliverParcel(parcel)">Deliver Parcel</a>
+    <div class="card">
+      <header class="card-header">
+        <p class="card-header-title">
+         {{ parcel.parcelno }} 
+        </p>
+      </header>
+      <div class="card-content">
+        <div class="content">
+         <b> Sender: </b> {{ parcel.sender }} 
+        </div>
+        <div class="content">
+          <b> Receiver: </b> {{ parcel.receiver }}
+        </div>
+        <div class="content">
+          <b> Comment: </b> {{ parcel.comment }}
+        </div>
+        <div class="content">
+          <b>Received: </b> {{ parcel.created.toDate().toLocaleString() }}
+        </div>
       </div>
+      <footer class="card-footer">
+        <a href="#" class="card-footer-item" @click="deliverParcel(parcel)">Deliver Parcel</a>
+      </footer>
     </div>
 
     <notification v-if="showSuccess" infotext="Parcel delivered successfully" />
@@ -31,46 +43,21 @@ export default {
   },
   data () {
     return {
-      parcels: this.getReceivedParcels(),
-      searchInput: '',
-      selectedParcel: {},
+      parcel: this.$route.params.parcel,
       showSuccess: false
     }
   },
-  computed: {
-    filteredParcels () {
-      return this.parcels.filter(parcel => {
-        return parcel.parcelno.toLowerCase().includes(this.searchInput.toLowerCase())
-      })
-    }
-  },
   methods: {
-    getReceivedParcels () {
-      let parcels = []
-      let parcelsRef = firestore.collection('parcels/')
-      parcelsRef.where('status', '==', 'received').get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(doc => {
-            // TODO: this is some workaround, needs fix asap
-            let parcel = doc.data()
-            parcel.id = doc.id
-            parcels.push(parcel)
-          })
-        })
-        .catch(error => {
-          console.log('Error getting documents: ', error)
-        })
-      return parcels
-    },
     deliverParcel (parcel) {
       parcel.status = 'delivered'
+      parcel.created = new Date()
       let parcelRef = firestore.collection('parcels').doc(parcel.id)
       parcelRef.set(parcel)
       .then(() => {
         console.log(`parcel with id ${parcel.id} successfully updated`)
         this.showSuccessMessage()
-        // reload data on component
-        this.parcels = this.getReceivedParcels()
+        // go to main
+        this.$router.push({name: 'Main'})
       })
       .catch(err => console.log(err))
     },
@@ -80,11 +67,17 @@ export default {
         this.showSuccess = false
       }, 2000)
     }
-  }
-
+  },
+mounted () {
+  console.log(this.parcel)
+}
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.deliverView {
+  text-align: left;
+  padding: 2vw;
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="maincontent">
     <h1 class="title">Parcel List</h1>
     <!--filter for the parcels-->
     <div class="field has-addons">
@@ -29,7 +29,7 @@
           <th>Receiver</th>
           <th>Comment</th>
           <th>Status</th>
-          <th>Received</th>
+          <th>Received / Delivered</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -49,7 +49,13 @@
             {{parcel.status}} 
           </td>
           <td> {{parcel.created.toDate().toLocaleString()}} </td>
-          <td><font-awesome-icon icon="trash-alt" class="trash-icon" @click="deleteParcelFromFirestore(parcel.id)"/></td>
+          <td>
+            <font-awesome-icon icon="trash-alt" class="action-icons" @click="deleteParcelFromFirestore(parcel.id)"/> 
+            <template v-if="parcel.status !== 'delivered'">
+              | <font-awesome-icon icon="arrow-up" class="action-icons" @click="goToDeliverPage(parcel)"/>
+            </template>
+          </td>
+        
         </tr>
       </tbody>
     </table>
@@ -101,6 +107,10 @@ export default {
         
         this.parcels = this.getParcelsFromFirestore()
       }
+    },
+    goToDeliverPage(parcel) {
+      console.log('routing to delivery with parcel: ', parcel)
+      this.$router.push({ name: 'Deliver', params: {parcel: parcel} })
     }
   }
 }
@@ -112,5 +122,6 @@ export default {
   width: 40%;
   min-width: 200px;
 }
-.trash-icon:hover{color: red};
+
+.action-icons:hover{color: red};
 </style>

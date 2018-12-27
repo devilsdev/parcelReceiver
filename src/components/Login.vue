@@ -21,6 +21,7 @@
       <div class="message-body">
         Welcome to ParcelReceiver! with ParcelReceiver you can keep track of your parcels.
       </div>
+      <span>made by <a href="https://github.com/devilsdev">devilsdev</a> with <font-awesome-icon icon="beer" /> </span>
     </article>
 
   </div>

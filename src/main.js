@@ -14,13 +14,15 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { faBox } from '@fortawesome/free-solid-svg-icons'
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
-import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
+import { faBeer } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faTrashAlt)
 library.add(faBox)
 library.add(faSignOutAlt)
 library.add(faArrowDown)
 library.add(faArrowUp)
+library.add(faBeer)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
