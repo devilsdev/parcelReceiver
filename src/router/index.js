@@ -6,6 +6,7 @@ import Login from '@/components/Login'
 import Main from '@/components/Main'
 import ParcelDeliver from '@/components/ParcelDeliver'
 import ParcelReceive from '@/components/ParcelReceive'
+import CreateAccount from '@/components/CreateAccount'
 
 Vue.use(Router)
 
@@ -54,6 +55,11 @@ export const router = new Router({
       meta: {
         requiresAuth: true
       }
+    }, 
+    {
+      path: '/createaccount',
+      name: 'CreateAccount',
+      component: CreateAccount
     }
   ]
 })

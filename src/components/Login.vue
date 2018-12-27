@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="login">
     <div class="cardWrapper">
       <div class="card has-text-centered is-wide login">
         <label class="label">E-Mail</label>
@@ -10,8 +10,12 @@
         <div class="control">
           <input class="input" type="password" placeholder="Password" v-model="password" v-on:keypress.enter="loginUser">
         </div>
-        <a class="button is-primary" @click="loginUser">Login</a>
+        <a class="button is-primary loginButton" @click="loginUser">Login</a>
       </div>
+      <div class="createAcc">
+        Don´t have an Account yet? <a href="#" @click="routeToCreateAccount">Create one</a>
+      </div>
+      
     </div>
 
     <article class="message is-primary fitBottom">
@@ -45,6 +49,9 @@ export default {
           this.$store.commit('changeAuthenticated', true)
         })
         .catch(err => alert(err.message))
+    },
+    routeToCreateAccount () {
+      this.$router.push({name: 'CreateAccount'})
     }
   }
 }
@@ -52,21 +59,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-
 .card {
   width: 550px;
   display: inline-block;
@@ -82,5 +74,12 @@ a {
 
 .fitBottom{
   padding-top: 20%;
+}
+
+.loginButton {
+  margin: 1vh;
+}
+.createAcc {
+  margin: 1vh;
 }
 </style>
