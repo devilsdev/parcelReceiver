@@ -34,7 +34,6 @@
 
 <script>
 import firebase from 'firebase'
-import { firestore } from '../main.js'
 export default {
   name: 'Navbar',
   methods: {

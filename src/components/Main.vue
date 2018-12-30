@@ -20,7 +20,7 @@
       </div>
     </div>
     <hr>
-    <span style="float: left; font-style: oblique;">Parcel´s overall: {{ filteredParcels.length }}</span>
+    <span class="parcel-count">Parcel´s overall: {{ filteredParcels.length }}</span>
     <table class="table is-fullwidth">
       <thead>
         <tr>
@@ -41,10 +41,10 @@
           <td> {{parcel.comment}} </td>
           <td> 
             <template v-if="parcel.status === 'received'">
-              <font-awesome-icon icon="arrow-down" color="green"/>
+              <font-awesome-icon icon="arrow-down" class="item-received"/>
             </template>
             <template v-if="parcel.status === 'delivered'">
-              <font-awesome-icon icon="arrow-up" color="purple"/>
+              <font-awesome-icon icon="arrow-up" class="item-delivered"/>
             </template>
             {{parcel.status}} 
           </td>
@@ -122,6 +122,17 @@ export default {
   width: 40%;
   min-width: 200px;
 }
-
-.action-icons:hover{color: red};
+.parcel-count {
+  float: left; 
+  font-style: oblique;
+}
+.action-icons:hover{
+  color: hsl(348, 100%, 61%)
+}
+.item-received {
+  color: hsl(171, 100%, 41%);
+}
+.item-delivered {
+  color: hsl(204, 86%, 53%);
+}
 </style>
