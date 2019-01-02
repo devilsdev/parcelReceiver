@@ -34,7 +34,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="parcel in filteredParcels" :key="parcel.parcelno">
+        <tr v-for="parcel in filteredParcels" :key="parcel.id">
           <td> {{parcel.parcelno}} </td>
           <td> {{parcel.sender}} </td>
           <td> {{parcel.receiver}} </td>
@@ -109,7 +109,6 @@ export default {
       }
     },
     goToDeliverPage(parcel) {
-      console.log('routing to delivery with parcel: ', parcel)
       this.$router.push({ name: 'Deliver', params: {parcel: parcel} })
     }
   }

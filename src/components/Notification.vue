@@ -1,6 +1,6 @@
 <template>
-	<div 
-		class="notification is-success parcel-notification"
+	<div
+		class="notification is-warning parcel-notification"
 	> {{ infotext }}</div>
 </template>
 

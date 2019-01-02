@@ -1,8 +1,7 @@
 <template>
   <div class="deliverView">
-    
-    <h1 class="title">Deliver parcel</h1>
-
+  <h1 class="title">Deliver parcel</h1>
+  <div class="wrapper">
     <div class="card">
       <header class="card-header">
         <p class="card-header-title">
@@ -24,11 +23,23 @@
         </div>
       </div>
       <footer class="card-footer">
-        <a href="#" class="card-footer-item" @click="deliverParcel(parcel)">Deliver Parcel</a>
+        <a href="#" class="card-footer-item" @click="toggleConfirm">Deliver Parcel</a>
       </footer>
     </div>
+  </div>
+  
+  <transition name="fade">
+    <notification v-if="showSuccess" infotext="Parcel successfully delivered" />
+  </transition>
 
-    <notification v-if="showSuccess" infotext="Parcel delivered successfully" />
+  <div ref="confirmModal" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <h1 class="title confirmTitle">Deliver this Parcel?</h1>
+    <button class="button is-danger" @click="deliverParcel(parcel)">Deliver</button>
+  </div>
+  <button class="modal-close is-large" aria-label="close" @click="toggleConfirm"></button>
+  </div>
 
   </div>
 </template>
@@ -54,30 +65,30 @@ export default {
       let parcelRef = firestore.collection('parcels').doc(parcel.id)
       parcelRef.set(parcel)
       .then(() => {
-        console.log(`parcel with id ${parcel.id} successfully updated`)
-        this.showSuccessMessage()
         // go to main
         this.$router.push({name: 'Main'})
       })
       .catch(err => console.log(err))
     },
-    showSuccessMessage () {
-      this.showSuccess = true
-      setTimeout(() => {
-        this.showSuccess = false
-      }, 2000)
+    toggleConfirm () {
+      this.$refs.confirmModal.classList.toggle('is-active')
     }
-  },
-mounted () {
-  console.log(this.parcel)
-}
+  }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .deliverView {
-  text-align: left;
   padding: 2vw;
+}
+.wrapper{
+  width: 40vw;
+  min-width: 350px;
+  display: inline-block;
+  text-align: left;  
+}
+.confirmTitle {
+  color: white;
 }
 </style>
