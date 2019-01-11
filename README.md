@@ -1,9 +1,10 @@
 # parcel-receiver
 
 > receive and deliver parcel´s
+> deployed here: https://parcelreceiver.firebaseapp.com
 
-## Firebase config
-# you have to add your own firebase Configuration at src/firebaseConfig.js
+## Firebase config (for your own build of this project)
+## you have to add your own firebase Configuration at src/firebaseConfig.js
 
 ## Build Setup
 
