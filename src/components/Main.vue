@@ -50,7 +50,7 @@
           </td>
           <td> {{parcel.created.toDate().toLocaleString()}} </td>
           <td>
-            <font-awesome-icon icon="trash-alt" class="action-icons" @click="deleteParcelFromFirestore(parcel.id)"/> 
+            <font-awesome-icon icon="trash-alt" class="action-icons" @click="toggleConfirm(parcel.id)"/> 
             <template v-if="parcel.status !== 'delivered'">
               | <font-awesome-icon icon="arrow-up" class="action-icons" @click="goToDeliverPage(parcel)"/>
             </template>
@@ -59,6 +59,15 @@
         </tr>
       </tbody>
     </table>
+
+  <div ref="confirmModal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <h1 class="title confirmTitle">Delete this Parcel?</h1>
+      <button class="button is-danger" @click="deleteParcelFromFirestore(currentParcelId)">Delete</button>
+    </div>
+    <button class="modal-close is-large" aria-label="close" @click="toggleConfirm"></button>
+  </div>
 
   </div>
 </template>
@@ -72,7 +81,8 @@ export default {
     return {
       parcels: this.getParcelsFromFirestore(),
       searchInput: '',
-      filterOption: 'parcelno'
+      filterOption: 'parcelno',
+      currentParcelId: ''
     }
   },
   computed: {
@@ -99,17 +109,21 @@ export default {
         })
       return parcels
     },
-    deleteParcelFromFirestore (parcelId) {
-      if(confirm("Do you really want to delete this parcel?")) {
-        firestore.collection('parcels').doc(parcelId).delete()
-          .then(() => console.log('parcel deleted successfully!'))
-          .catch(err => console.log(err))
-        
-        this.parcels = this.getParcelsFromFirestore()
-      }
+    deleteParcelFromFirestore () {
+      firestore.collection('parcels').doc(this.currentParcelId).delete()
+        .then(() => console.log('parcel deleted successfully!'))
+        .catch(err => console.log(err))
+
+      this.$refs.confirmModal.classList.toggle('is-active')
+      this.currentParcelId = ''
+      this.parcels = this.getParcelsFromFirestore()
     },
     goToDeliverPage(parcel) {
       this.$router.push({ name: 'Deliver', params: {parcel: parcel} })
+    },
+    toggleConfirm (parcelId) {
+      this.currentParcelId = parcelId
+      this.$refs.confirmModal.classList.toggle('is-active')
     }
   }
 }
@@ -120,10 +134,12 @@ export default {
 .searchinput {
   width: 40%;
   min-width: 200px;
+  padding-left: 1vw;
 }
 .parcel-count {
   float: left; 
   font-style: oblique;
+  padding-left: 1vw;
 }
 .action-icons:hover{
   color: hsl(348, 100%, 61%)
@@ -133,5 +149,8 @@ export default {
 }
 .item-delivered {
   color: hsl(204, 86%, 53%);
+}
+.confirmTitle {
+  color: white;
 }
 </style>
