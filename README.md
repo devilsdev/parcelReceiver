@@ -4,7 +4,7 @@
 > deployed here: https://parcelreceiver.firebaseapp.com
 
 ## Firebase config (for your own build of this project)
-## you have to add your own firebase Configuration at src/firebaseConfig.js
+you have to add your own firebase Configuration at src/firebaseConfig.js
 
 ## Build Setup
 
